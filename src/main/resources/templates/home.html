@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Home</title>
+</head>
+<body>
+<pre>
+    ho
+    $!{user.getName()}
+
+    colors: $!{colors}
+    #foreach($color in $colors)
+        this is color: $color, $foreach.count, $foreach.index
+    #end
+
+    #foreach($key in $map.keySet())
+        Number: $key, Value: $map.get($key)
+    #end
+
+    #foreach($entry in $map.entrySet())
+        Number: $entry.key, Value: $entry.value
+    #end
+
+    #set($title = "mytitle")
+
+    #parse("head.html")
+    #include("head.html")
+
+    #macro (renderColor, $index, $color)
+        Color index: $index, color: $color
+    #end
+
+    #foreach($color in $colors)
+        #renderColor($foreach.index, $color)
+    #end
+</pre>
+</body>
+</html>
