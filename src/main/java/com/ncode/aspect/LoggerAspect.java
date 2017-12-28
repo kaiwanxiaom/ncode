@@ -1,4 +1,4 @@
-package com.ncode.Aspect;
+package com.ncode.aspect;
 
 import org.aspectj.lang.JoinPoint;
 import org.aspectj.lang.annotation.After;
@@ -9,8 +9,8 @@ import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
 
 
-@Aspect
-@Component
+//@Aspect
+//@Component
 public class LoggerAspect {
     private static final Logger logger = LoggerFactory.getLogger(LoggerAspect.class);
 
