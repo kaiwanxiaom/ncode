@@ -16,7 +16,7 @@ public interface QuestionDAO {
 
     @Insert({"insert into ", TABLE_NAME, "(", INSERT_FIELDS, ")",
             " values( ", "#{title}, #{content}, #{userId}, #{createdDate}, #{commentCount})"})
-    void addQuestion(Question question);
+    int addQuestion(Question question);
 
     @Select({"select ", SELECT_FIELDS, " from ", TABLE_NAME, " where id = #{id}"})
     Question selectById(int id);
