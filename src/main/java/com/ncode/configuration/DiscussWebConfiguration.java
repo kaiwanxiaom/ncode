@@ -18,7 +18,7 @@ public class DiscussWebConfiguration extends WebMvcConfigurerAdapter {
     @Override
     public void addInterceptors(InterceptorRegistry registry) {
         registry.addInterceptor(passportInterceptor);
-        registry.addInterceptor(loginRequestInterceptor).addPathPatterns("/user/*");
+        registry.addInterceptor(loginRequestInterceptor).addPathPatterns("/user/*", "/msg/*");
         super.addInterceptors(registry);
     }
 }

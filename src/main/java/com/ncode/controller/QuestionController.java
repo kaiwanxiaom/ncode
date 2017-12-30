@@ -1,8 +1,9 @@
 package com.ncode.controller;
 
-import com.ncode.model.HostHolder;
-import com.ncode.model.Question;
+import com.ncode.model.*;
+import com.ncode.service.CommentService;
 import com.ncode.service.QuestionService;
+import com.ncode.service.UserService;
 import com.ncode.util.DiscussUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -11,11 +12,13 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 @Controller
 public class QuestionController {
-    private static final Logger logger = LoggerFactory.getLogger(DiscussUtil.class);
+    private static final Logger logger = LoggerFactory.getLogger(QuestionController.class);
 
     @Autowired
     QuestionService questionService;
@@ -23,10 +26,33 @@ public class QuestionController {
     @Autowired
     HostHolder hostHolder;
 
+    @Autowired
+    CommentService commentService;
+
+    @Autowired
+    UserService userService;
+
     @RequestMapping(value = "/question/{qid}", method = RequestMethod.GET)
-    public String addQuestion(Model model, @PathVariable("qid") int qid) {
-        Question question = questionService.getQuestionById(qid);
-        model.addAttribute("question", question);
+    public String detailQuestion(Model model, @PathVariable("qid") int qid) {
+        try {
+            Question question = questionService.getQuestionById(qid);
+            model.addAttribute("question", question);
+
+            List<Comment> comments =
+                    commentService.selectCommentByEntity(qid, EntityType.ENTITY_QUESTION , 0, 10);
+            List<ViewObject> vos = new ArrayList<>();
+            for (Comment comment : comments) {
+                ViewObject vo = new ViewObject();
+                vo.set("comment", comment);
+                User user = userService.getUserById(comment.getUserId());
+                vo.set("user", user);
+                vos.add(vo);
+            }
+            model.addAttribute("comments", vos);
+        }catch (Exception e) {
+            logger.error("显示问题出错" + e.getMessage());
+            return "redirect:/";
+        }
         return "detail";
     }
 
@@ -50,7 +76,7 @@ public class QuestionController {
                 return DiscussUtil.getJSONString(0);
             }
         } catch (Exception e) {
-            logger.error("添加用户失败" + e.getMessage());
+            logger.error("添加问题失败" + e.getMessage());
         }
         return DiscussUtil.getJSONString(1, "错误");
     }

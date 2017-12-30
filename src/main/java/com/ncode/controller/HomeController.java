@@ -19,7 +19,7 @@ import java.util.List;
 
 @Controller
 public class HomeController {
-    private static final Logger logger = LoggerFactory.getLogger(DiscussUtil.class);
+    private static final Logger logger = LoggerFactory.getLogger(HomeController.class);
 
     @Autowired
     UserService userService;
@@ -34,7 +34,7 @@ public class HomeController {
         return "index";
     }
 
-    @RequestMapping(value = "/", method = {RequestMethod.GET, RequestMethod.POST})
+    @RequestMapping(value = {"/", "index"}, method = {RequestMethod.GET, RequestMethod.POST})
     public String home(Model model) {
         model.addAttribute("vos", getViewQuestions(0, 0, 10));
         return "index";

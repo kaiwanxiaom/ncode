@@ -5,10 +5,7 @@ import com.ncode.dao.CommentDAO;
 import com.ncode.dao.MessageDAO;
 import com.ncode.dao.QuestionDAO;
 import com.ncode.dao.UserDAO;
-import com.ncode.model.Comment;
-import com.ncode.model.Message;
-import com.ncode.model.Question;
-import com.ncode.model.User;
+import com.ncode.model.*;
 import org.junit.Assert;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -65,23 +62,22 @@ public class InitDatabaseTests {
             questionDAO.addQuestion(question);
             questionDAO.selectById(i+1);
 
-            Message message = new Message();
-            message.setContent("message content!!!");
-            message.setConversationId(i+1);
-            message.setFromId(i+1);
-            message.setToId(10-i);
-            message.setCreatedDate(date);
+//            Message message = new Message();
+//            message.setContent("message content!!!");
+//            message.setFromId(i+1);
+//            message.setToId(10-i);
+//            message.setCreatedDate(date);
+//
+//            messageDAO.addMessage(message);
 
-            messageDAO.addMessage(message);
-
-            Comment comment = new Comment();
-            comment.setContent("Comment Content....");
-            comment.setCreatedDate(date);
-            comment.setEntityId(i+1);
-            comment.setEntityType("question");
-            comment.setUserId(10-i);
-
-            commentDAO.addComment(comment);
+//            Comment comment = new Comment();
+//            comment.setContent("Comment Content....");
+//            comment.setCreatedDate(date);
+//            comment.setEntityId(i+1);
+//            comment.setEntityType(EntityType.ENTITY_QUESTION);
+//            comment.setUserId(10-i);
+//
+//            commentDAO.addComment(comment);
 		}
 
         Assert.assertEquals("xxx", userDAO.selectById(1).getPassword());
@@ -90,8 +86,8 @@ public class InitDatabaseTests {
 
         System.out.println(questionDAO.selectLatestQuestions(0, 0, 10));
 
-        System.out.println(messageDAO.getMessageByToId(5, 0, 10));
+//        System.out.println(messageDAO.getMessageByToId(5, 0, 10));
 
-        System.out.println(commentDAO.selectByEntity(2, "question", 0, 10));
+        System.out.println(commentDAO.selectByEntity(2, EntityType.ENTITY_QUESTION, 0, 10));
     }
 }

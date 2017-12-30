@@ -7,8 +7,9 @@ public class Message {
     private int fromId;
     private int toId;
     private String content;
-    private int conversationId;
+    private String conversationId;
     private Date createdDate;
+    private int hasRead;
 
     public int getId() {
         return id;
@@ -42,12 +43,11 @@ public class Message {
         this.content = content;
     }
 
-    public int getConversationId() {
-        return conversationId;
-    }
-
-    public void setConversationId(int conversationId) {
-        this.conversationId = conversationId;
+    public String getConversationId() {
+        if (fromId < toId) {
+            return String.format("%d_%d", fromId, toId);
+        }
+        return String.format("%d_%d", toId, fromId);
     }
 
     public Date getCreatedDate() {
@@ -56,5 +56,13 @@ public class Message {
 
     public void setCreatedDate(Date createdDate) {
         this.createdDate = createdDate;
+    }
+
+    public int getHasRead() {
+        return hasRead;
+    }
+
+    public void setHasRead(int hasRead) {
+        this.hasRead = hasRead;
     }
 }
