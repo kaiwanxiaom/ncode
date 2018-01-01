@@ -2,6 +2,7 @@ package com.ncode.controller;
 
 import com.ncode.model.*;
 import com.ncode.service.CommentService;
+import com.ncode.service.LikeService;
 import com.ncode.service.QuestionService;
 import com.ncode.service.UserService;
 import com.ncode.util.DiscussUtil;
@@ -32,6 +33,9 @@ public class QuestionController {
     @Autowired
     UserService userService;
 
+    @Autowired
+    LikeService likeService;
+
     @RequestMapping(value = "/question/{qid}", method = RequestMethod.GET)
     public String detailQuestion(Model model, @PathVariable("qid") int qid) {
         try {
@@ -46,6 +50,15 @@ public class QuestionController {
                 vo.set("comment", comment);
                 User user = userService.getUserById(comment.getUserId());
                 vo.set("user", user);
+                vo.set("likeCount", likeService.getLikeCount(EntityType.ENTITY_COMMENT, comment.getId()));
+                if (hostHolder.getUser() != null) {
+                    vo.set("liked", likeService.isLiked(hostHolder.getUser().getId(), EntityType.ENTITY_COMMENT, comment.getId()));
+                    vo.set("disLiked", likeService.isDisLiked(hostHolder.getUser().getId(), EntityType.ENTITY_COMMENT, comment.getId()));
+                } else {
+                    vo.set("liked", false);
+                    vo.set("disLiked", false);
+                }
+
                 vos.add(vo);
             }
             model.addAttribute("comments", vos);
