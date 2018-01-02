@@ -17,6 +17,9 @@ public class CommentService {
     @Autowired
     SensitiveService sensitiveService;
 
+    public Comment getCommentById(int id) {
+        return commentDAO.getCommentById(id);
+    }
 
     public int addComment(Comment comment) {
         comment.setContent(HtmlUtils.htmlEscape(comment.getContent()));
@@ -27,7 +30,6 @@ public class CommentService {
     public List<Comment> selectCommentByEntity(int entityId, int entityType, int offset, int limit) {
         return commentDAO.selectByEntity(entityId, entityType, offset, limit);
     }
-
 
     public int getCommentCountByEntity(int entityId, int entityType) {
         return commentDAO.getCommentCountByEntity(entityId, entityType);

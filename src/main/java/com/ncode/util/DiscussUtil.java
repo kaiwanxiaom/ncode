@@ -10,6 +10,7 @@ public class DiscussUtil {
     private static final Logger logger = LoggerFactory.getLogger(DiscussUtil.class);
 
     public static int ANONYMOUS_USERID = 3;
+    public static int MASTER_USERID = 2;
 
     public static String getJSONString(int code, String msg) {
         JSONObject jsonObject = new JSONObject();

@@ -1,5 +1,8 @@
 package com.ncode.controller;
 
+import com.ncode.async.EventModel;
+import com.ncode.async.EventProducer;
+import com.ncode.async.EventType;
 import com.ncode.service.UserService;
 import com.ncode.util.DiscussUtil;
 import org.apache.commons.lang.StringUtils;
@@ -23,6 +26,9 @@ public class LoginController {
 
     @Autowired
     UserService userService;
+
+    @Autowired
+    EventProducer eventProducer;
 
     @RequestMapping(value = "/reg/", method = {RequestMethod.POST})
     public String reg(Model model,
@@ -64,6 +70,12 @@ public class LoginController {
                 Cookie cookie = new Cookie("ticket", map.get("ticket").toString());
                 cookie.setPath("/");
                 httpResponse.addCookie(cookie);
+
+
+//                eventProducer.fireEvent(new EventModel(EventType.LOGIN)
+//                        .setExte("email", "shijiechen@outlook.com")
+//                        .setExte("username", username));
+
                 if(StringUtils.isNotBlank(next)) {
                     return "redirect:" + next;
                 }
@@ -79,8 +91,7 @@ public class LoginController {
     }
 
     @RequestMapping(value = "/reglogin", method = RequestMethod.GET)
-    public String reglogin(Model model,
-                           @RequestParam(value = "next", required = false) String next) {
+    public String reglogin(Model model, @RequestParam(value = "next", required = false) String next) {
         model.addAttribute("next", next);
         return "login";
     }

@@ -1,8 +1,12 @@
 package com.ncode.controller;
 
+import com.ncode.async.EventModel;
+import com.ncode.async.EventProducer;
+import com.ncode.async.EventType;
 import com.ncode.model.Comment;
 import com.ncode.model.EntityType;
 import com.ncode.model.HostHolder;
+import com.ncode.model.Question;
 import com.ncode.service.CommentService;
 import com.ncode.service.QuestionService;
 import com.ncode.util.DiscussUtil;
@@ -29,6 +33,9 @@ public class CommentController {
     @Autowired
     QuestionService questionService;
 
+    @Autowired
+    EventProducer eventProducer;
+
     @RequestMapping(value = {"/addComment"}, method = RequestMethod.POST)
     public String addComment(@RequestParam("questionId") int questionId,
                              @RequestParam("content") String content) {
@@ -46,6 +53,13 @@ public class CommentController {
             comment.setStatus(0);
 
             commentService.addComment(comment);
+
+            // 评论更新通知
+            Question question = questionService.getQuestionById(questionId);
+            eventProducer.fireEvent(new EventModel(EventType.COMMENT)
+                    .setExte("username", hostHolder.getUser().getName())
+                    .setEntityOwnerId(question.getUserId())
+                    .setExte("questionTitle", question.getTitle()));
 
             int count = commentService.getCommentCountByEntity(comment.getEntityId(), comment.getEntityType());
             questionService.updateCommentCount(count, questionId);

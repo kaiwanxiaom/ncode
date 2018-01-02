@@ -8,5 +8,7 @@ Passport
 Entity
 default
 anonymous [əˈnɑnɪməs]
-synchronized [ˈsɪŋkrəˌnaɪz]
+synchronize [ˈsɪŋkrəˌnaɪz]
+asynchrony
 conversations
+extension

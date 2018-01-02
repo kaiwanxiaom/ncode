@@ -14,6 +14,9 @@ public interface CommentDAO {
     String INSERT_FIELD = "content, user_id, created_date, entity_id, entity_type, status";
     String SELECT_FIELD = "id, " + INSERT_FIELD;
 
+    @Select({"select " + SELECT_FIELD + " from ", TABLE_NAME, " where id=#{id} "})
+    Comment getCommentById(int id);
+
     @Select({"select", SELECT_FIELD, " from ", TABLE_NAME,
             " where entity_id = #{entityId} and entity_type = #{entityType}",
             " order by id desc limit #{offset}, #{limit}"})
