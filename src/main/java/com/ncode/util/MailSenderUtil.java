@@ -25,7 +25,7 @@ public class MailSenderUtil implements InitializingBean {
     private VelocityEngine velocityEngine;
 
     public boolean sendWithHTMLTemplate(String to, String subject,
-                                               String template, Map<String, Object> model) {
+                                        String template, Map<String, Object> model) {
         try {
             String nick = MimeUtility.encodeText("陈示捷");
             InternetAddress from = new InternetAddress(nick + "<chenshijie.zjwz@qq.com>");

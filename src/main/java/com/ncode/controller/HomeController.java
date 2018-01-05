@@ -1,7 +1,11 @@
 package com.ncode.controller;
 
+import com.ncode.model.EntityType;
+import com.ncode.model.HostHolder;
 import com.ncode.model.Question;
 import com.ncode.model.ViewObject;
+import com.ncode.service.CommentService;
+import com.ncode.service.FollowService;
 import com.ncode.service.QuestionService;
 import com.ncode.service.UserService;
 import com.ncode.util.DiscussUtil;
@@ -27,11 +31,28 @@ public class HomeController {
     @Autowired
     QuestionService questionService;
 
+    @Autowired
+    FollowService followService;
+
+    @Autowired
+    CommentService commentService;
+
+    @Autowired
+    HostHolder hostHolder;
+
 
     @RequestMapping(value = "/user/{userId}", method = {RequestMethod.GET, RequestMethod.POST})
     public String userIndex(Model model, @PathVariable("userId") int userId) {
+        ViewObject vo = new ViewObject();
+        vo.set("followerCount", followService.getFollowerCount(EntityType.ENTITY_USER, userId));
+        vo.set("user", userService.getUserById(userId));
+        vo.set("followeeCount", followService.getFolloweeCount(EntityType.ENTITY_USER, userId));
+        vo.set("commentCount", commentService.getCommentCountByUserId(userId));
+        vo.set("followed", followService.isFollowed(EntityType.ENTITY_USER, userId, hostHolder.getUser().getId()));
+        model.addAttribute("profileUser", vo);
         model.addAttribute("vos", getViewQuestions(userId, 0, 10));
-        return "index";
+
+        return "profile";
     }
 
     @RequestMapping(value = {"/", "index"}, method = {RequestMethod.GET, RequestMethod.POST})
@@ -47,6 +68,7 @@ public class HomeController {
             ViewObject vo = new ViewObject();
             vo.set("question", question);
             vo.set("user", userService.getUserById(question.getUserId()));
+            vo.set("followCount", followService.getFollowerCount(EntityType.ENTITY_QUESTION, question.getId()));
             vos.add(vo);
         }
         return vos;

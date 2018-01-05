@@ -1,10 +1,7 @@
 package com.ncode.controller;
 
 import com.ncode.model.*;
-import com.ncode.service.CommentService;
-import com.ncode.service.LikeService;
-import com.ncode.service.QuestionService;
-import com.ncode.service.UserService;
+import com.ncode.service.*;
 import com.ncode.util.DiscussUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -13,9 +10,11 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
+import java.awt.image.VolatileImage;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.Set;
 
 @Controller
 public class QuestionController {
@@ -36,15 +35,35 @@ public class QuestionController {
     @Autowired
     LikeService likeService;
 
+    @Autowired
+    FollowService followService;
+
     @RequestMapping(value = "/question/{qid}", method = RequestMethod.GET)
     public String detailQuestion(Model model, @PathVariable("qid") int qid) {
         try {
             Question question = questionService.getQuestionById(qid);
             model.addAttribute("question", question);
+            if (hostHolder.getUser() != null) {
+                model.addAttribute("followed",
+                        followService.isFollowed(EntityType.ENTITY_QUESTION, qid, hostHolder.getUser().getId()));
+            }
+
+            List<ViewObject> vos = new ArrayList<>();
+            Set<String> userIds = followService.getFollowers(EntityType.ENTITY_QUESTION, qid, 10);
+            for (String userId : userIds) {
+                ViewObject vo = new ViewObject();
+                User user = userService.getUserById(Integer.parseInt(userId));
+                vo.set("name", user.getName());
+                vo.set("headUrl", user.getHeadUrl());
+                vo.set("id", user.getId());
+                vos.add(vo);
+            }
+
+            model.addAttribute("followUsers", vos);
 
             List<Comment> comments =
                     commentService.selectCommentByEntity(qid, EntityType.ENTITY_QUESTION , 0, 10);
-            List<ViewObject> vos = new ArrayList<>();
+            vos = new ArrayList<>();
             for (Comment comment : comments) {
                 ViewObject vo = new ViewObject();
                 vo.set("comment", comment);

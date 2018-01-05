@@ -12,3 +12,4 @@ synchronize [ˈsɪŋkrəˌnaɪz]
 asynchrony
 conversations
 extension
+transaction
