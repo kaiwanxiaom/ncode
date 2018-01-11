@@ -84,7 +84,10 @@ public class FollowController {
                     .setEntityType(EntityType.ENTITY_QUESTION)
                     .setEntityOwnerId(question.getUserId())
                     .setExte("questionTitle", question.getTitle())
-                    .setEntityId(questionId));
+                    .setEntityId(questionId)
+                    .setId(hostHolder.getUser().getId()) );
+
+
         }
 
         Map<String, Object> info = new HashMap<>();

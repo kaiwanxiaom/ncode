@@ -1,14 +1,10 @@
 package com.ncode.controller;
 
-import com.ncode.model.EntityType;
-import com.ncode.model.HostHolder;
-import com.ncode.model.Question;
-import com.ncode.model.ViewObject;
-import com.ncode.service.CommentService;
-import com.ncode.service.FollowService;
-import com.ncode.service.QuestionService;
-import com.ncode.service.UserService;
+import com.ncode.model.*;
+import com.ncode.service.*;
 import com.ncode.util.DiscussUtil;
+import com.ncode.util.JedisAdapter;
+import com.ncode.util.JedisUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -40,6 +36,11 @@ public class HomeController {
     @Autowired
     HostHolder hostHolder;
 
+    @Autowired
+    JedisAdapter jedisAdapter;
+
+    @Autowired
+    FeedService feedService;
 
     @RequestMapping(value = "/user/{userId}", method = {RequestMethod.GET, RequestMethod.POST})
     public String userIndex(Model model, @PathVariable("userId") int userId) {
@@ -52,6 +53,13 @@ public class HomeController {
         model.addAttribute("profileUser", vo);
         model.addAttribute("vos", getViewQuestions(userId, 0, 10));
 
+        String key = JedisUtil.getTimeline(userId);
+        List<String> feedIds = jedisAdapter.lrange(key, 0, 5);
+        List<Feed> feeds = new ArrayList<>();
+        for (String feedId : feedIds) {
+            feeds.add(feedService.getFeedById(Integer.parseInt(feedId)));
+        }
+        model.addAttribute("feeds", feeds);
         return "profile";
     }
 

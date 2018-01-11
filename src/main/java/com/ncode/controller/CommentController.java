@@ -59,6 +59,10 @@ public class CommentController {
             eventProducer.fireEvent(new EventModel(EventType.COMMENT)
                     .setExte("username", hostHolder.getUser().getName())
                     .setEntityOwnerId(question.getUserId())
+                    .setId(hostHolder.getUser().getId())
+                    .setType(EventType.COMMENT)
+                    .setEntityId(questionId)
+                    .setEntityType(EntityType.ENTITY_QUESTION)
                     .setExte("questionTitle", question.getTitle()));
 
             int count = commentService.getCommentCountByEntity(comment.getEntityId(), comment.getEntityType());

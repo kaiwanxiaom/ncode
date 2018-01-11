@@ -1,0 +1,25 @@
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.ncode.dao.FeedDAO">
+    <sql id="table">feed</sql>
+    <sql id="selectFields">id, type, user_id, created_date, content</sql>
+    <select id="selectUsersFeed" resultType="com.ncode.model.Feed">
+        SELECT
+        <include refid="selectFields"/>
+        FROM
+        <include refid="table"/>
+        <if test="userIds.size() != 0">
+            WHERE user_id in
+            <foreach item="item" index="index" collection="userIds" open="(" close=")" separator=",">
+                #{item}
+            </foreach>
+        </if>
+        <if test="userIds.size() == 0">
+            WHERE user_id = -1
+        </if>
+        ORDER BY id DESC
+        LIMIT #{offset},#{limit}
+    </select>
+</mapper>

@@ -7,6 +7,7 @@ public class JedisUtil {
     private static String EVENTS_QUEUE = "EVENTS_QUEUE";
     private static String BLZ_FOLLOWER = "FOLLOWER";
     private static String BLZ_FOLLOWEE = "FOLLOWEE";
+    private static String BLZ_TIMELINE = "TIMELINE";
 
     public static String getFolloweeKey(int entityType, int entityId) {
         return BLZ_FOLLOWEE + SPLIT + String.valueOf(entityType) + SPLIT + String.valueOf(entityId);
@@ -26,5 +27,9 @@ public class JedisUtil {
 
     public static String getEventsQueue() {
         return EVENTS_QUEUE;
+    }
+
+    public static String getTimeline(int userId) {
+        return BLZ_TIMELINE + SPLIT + String.valueOf(userId);
     }
 }
