@@ -1,5 +1,8 @@
 package com.ncode.controller;
 
+import com.ncode.async.EventModel;
+import com.ncode.async.EventProducer;
+import com.ncode.async.EventType;
 import com.ncode.model.*;
 import com.ncode.service.*;
 import com.ncode.util.DiscussUtil;
@@ -38,6 +41,9 @@ public class QuestionController {
     @Autowired
     FollowService followService;
 
+    @Autowired
+    EventProducer eventProducer;
+
     @RequestMapping(value = "/question/{qid}", method = RequestMethod.GET)
     public String detailQuestion(Model model, @PathVariable("qid") int qid) {
         try {
@@ -49,7 +55,7 @@ public class QuestionController {
             }
 
             List<ViewObject> vos = new ArrayList<>();
-            Set<String> userIds = followService.getFollowers(EntityType.ENTITY_QUESTION, qid, 10);
+            Set<String> userIds = followService.getFollowers(EntityType.ENTITY_QUESTION, qid, 20);
             for (String userId : userIds) {
                 ViewObject vo = new ViewObject();
                 User user = userService.getUserById(Integer.parseInt(userId));
@@ -62,7 +68,7 @@ public class QuestionController {
             model.addAttribute("followUsers", vos);
 
             List<Comment> comments =
-                    commentService.selectCommentByEntity(qid, EntityType.ENTITY_QUESTION , 0, 10);
+                    commentService.selectCommentByEntity(qid, EntityType.ENTITY_QUESTION , 0, 20);
             vos = new ArrayList<>();
             for (Comment comment : comments) {
                 ViewObject vo = new ViewObject();
@@ -105,6 +111,10 @@ public class QuestionController {
                 return DiscussUtil.getJSONString(999);
             }
             if (questionService.addQuestion(question) > 0) {
+                eventProducer.fireEvent(new EventModel(EventType.ADD_QUESTION)
+                        .setId(question.getUserId()).setEntityId(question.getId())
+                        .setExte("title", question.getTitle())
+                        .setExte("content", question.getContent()));
                 return DiscussUtil.getJSONString(0);
             }
         } catch (Exception e) {

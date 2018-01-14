@@ -2,7 +2,6 @@ package com.ncode.controller;
 
 import com.ncode.model.*;
 import com.ncode.service.*;
-import com.ncode.util.DiscussUtil;
 import com.ncode.util.JedisAdapter;
 import com.ncode.util.JedisUtil;
 import org.slf4j.Logger;
@@ -65,7 +64,7 @@ public class HomeController {
 
     @RequestMapping(value = {"/", "index"}, method = {RequestMethod.GET, RequestMethod.POST})
     public String home(Model model) {
-        model.addAttribute("vos", getViewQuestions(0, 0, 10));
+        model.addAttribute("vos", getViewQuestions(0, 0, 20));
         return "index";
     }
 
@@ -74,6 +73,8 @@ public class HomeController {
         List<ViewObject> vos = new ArrayList<>();
         for (Question question : questions) {
             ViewObject vo = new ViewObject();
+            int len = Math.min(question.getContent().length(), 100);
+            question.setContent(question.getContent().substring(0, len));
             vo.set("question", question);
             vo.set("user", userService.getUserById(question.getUserId()));
             vo.set("followCount", followService.getFollowerCount(EntityType.ENTITY_QUESTION, question.getId()));
