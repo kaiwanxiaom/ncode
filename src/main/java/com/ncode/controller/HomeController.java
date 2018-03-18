@@ -12,7 +12,9 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 
+import javax.websocket.server.PathParam;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -63,8 +65,8 @@ public class HomeController {
     }
 
     @RequestMapping(value = {"/", "index"}, method = {RequestMethod.GET, RequestMethod.POST})
-    public String home(Model model) {
-        model.addAttribute("vos", getViewQuestions(0, 0, 20));
+    public String home(Model model, @RequestParam(value = "page", defaultValue = "0") int page) {
+        model.addAttribute("vos", getViewQuestions(0, 10*page, 10));
         return "index";
     }
 

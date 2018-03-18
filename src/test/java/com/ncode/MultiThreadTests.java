@@ -3,6 +3,8 @@ package com.ncode;
 
 import java.util.concurrent.*;
 import java.util.concurrent.atomic.AtomicInteger;
+import java.util.concurrent.locks.Lock;
+import java.util.concurrent.locks.ReentrantLock;
 
 
 class MyThread extends Thread {
@@ -29,6 +31,22 @@ public class MultiThreadTests implements Runnable {
 
     }
 
+    private static int vol = 0;
+
+    private static void testVolatile() {
+        for(int i = 0; i < 20 ; i++) {
+            new Thread(new Runnable() {
+                @Override
+                public void run() {
+                    int N = 100;
+                    while(N-- > 0)
+                        vol = N;
+                    System.out.println(vol);
+                }
+            }).start();
+        }
+    }
+
     private static final Object obj = new Object();
 
     private static void testThread() {
@@ -49,6 +67,12 @@ public class MultiThreadTests implements Runnable {
                 }
             }).start();
         }
+    }
+
+    static Lock lock = new ReentrantLock();
+
+    private static void testReentranLock() {
+        lock.lock();
     }
 
     static BlockingQueue<Integer> bq = new ArrayBlockingQueue<Integer>(10);
@@ -175,17 +199,19 @@ public class MultiThreadTests implements Runnable {
                     }
                 }
             }).start();
+
         }
 
 
     }
 
     public static void main(String[] args) {
+        testVolatile();
         // testThread();
         // testBlockingQueue();
         // testThreadLocal();
         // testExecutorService();
         // testFuture();
-        testAtomic();
+        // testAtomic();
     }
 }

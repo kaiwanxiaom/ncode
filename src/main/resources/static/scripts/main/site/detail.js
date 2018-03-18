@@ -1,8 +1,11 @@
+
 (function (window, undefined) {
+
     var Action = Base.getClass('main.util.Action');
     var Business = Base.getClass('main.util.Business');
 
     Base.ready({
+
         initialize: fInitialize,
         // 事件代理
         events: {
@@ -37,8 +40,8 @@
             commentId: sId,
             call: function (oResult) {
                 // 调整样式
-                oDv.find('.pressed').removeClass('pressed');
-                oDv.find(bLike ? '.js-like' : '.js-dislike').addClass('pressed');
+                oDv.find('.active').removeClass('active');
+                oDv.find(bLike ? '.js-like' : '.js-dislike').addClass('active');
                 // 更新数量
                 oDv.closest('div.js-comment').find('span.js-voteCount').html(oResult.msg);
             },

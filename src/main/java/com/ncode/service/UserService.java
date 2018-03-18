@@ -52,10 +52,10 @@ public class UserService {
             map.put("msg", "已存在用户名");
             return map;
         }
-        if(!Pattern.matches(".+@.+\\..+", username) && !Pattern.matches("\\d{11}+", username)) {
-            map.put("msg", "请用邮箱或手机作为用户名");
-            return map;
-        }
+//        if(!Pattern.matches(".+@.+\\..+", username) && !Pattern.matches("\\d{11}+", username)) {
+//            map.put("msg", "请用邮箱或手机作为用户名");
+//            return map;
+//        }
 
         user = new User();
         user.setName(username);

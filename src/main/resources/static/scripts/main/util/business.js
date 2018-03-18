@@ -62,7 +62,7 @@
                     // 修改标记位
                     oEl.attr('data-status', bFollow ? '0' : '1');
                     // 按钮颜色
-                    oEl.removeClass('zg-btn-white zg-btn-green').addClass(bFollow ? 'zg-btn-green' : 'zg-btn-white');
+                    // oEl.removeClass('zg-btn-white zg-btn-green').addClass(bFollow ? 'zg-btn-green' : 'zg-btn-white');
                     // 文字
                     oEl.html(bFollow ? '关注问题' : '取消关注');
                     // 修改数量

@@ -1,3 +1,8 @@
+body {
+    background: #f3f3f3!important;
+}
+
+
 @-webkit-keyframes fadeIn {
     from {
         opacity: 0;
@@ -136,7 +141,9 @@ button,input,select,textarea {
 }
 
 img {
-    border: 0
+    border: 0;
+    width: 100%;
+    height: 100%;
 }
 
 a {
@@ -144,7 +151,7 @@ a {
 }
 
 a:hover {
-    text-decoration: underline
+    text-decoration: none
 }
 
 html.touchevents a:hover {
@@ -272,7 +279,7 @@ a {
     color: #333
 }
 a:hover {
-    color: #25bb9b;
+    color: #559abb;
 }
 a:active {
     outline: 0
@@ -354,7 +361,7 @@ button {
 }
 
 h1,h2,h3,h4,h5 {
-    font-weight: 700;
+    font-weight: normal;
     font-size: 14px;
     outline: 0
 }
@@ -644,7 +651,7 @@ address,sup {
 }
 
 .zg-link:hover {
-    text-decoration: underline
+    text-decoration: none
 }
 
 .zg-link-disabled:hover {
@@ -1063,7 +1070,7 @@ html.no-touchevents .zg-link-gray:hover,html.no-touchevents .zg-link-gray-normal
 }
 
 .zg-wrap {
-    width: 960px;
+    width: 1060px;
     margin: 0 auto;
     clear: both
 }
@@ -1777,11 +1784,11 @@ i[class^=z-icon-],i[class*=" z-icon-"] {
 }
 
 html.no-touchevents .meta-item:hover {
-    color: #25bb9b
+    color: #3e9dbb
 }
 
 html.no-touchevents .meta-item:hover .goog-menu-button-caption {
-    color: #25bb9b;
+    color: #3e9dbb;
     text-decoration: underline
 }
 
@@ -1999,8 +2006,8 @@ html.no-touchevents .meta-item:hover .z-icon-comment {
     color: #eee!important;
     text-shadow: 0 1px 0 rgba(255,255,255,.3);
     background: #8ab923;
-    background: -webkit-linear-gradient(top,#25bb9b,#00B091);
-    background: linear-gradient(to bottom,#25bb9b,#00B091);
+    background: -webkit-linear-gradient(top,#25bb9b,#752979);
+    background: linear-gradient(to bottom,#25bb9b,#752979);
     border: 1px solid #25bb9b;
     box-shadow: 0 1px 0 rgba(255,255,255,.5) inset,0 1px 0 rgba(0,0,0,.2)
 }
@@ -2016,13 +2023,13 @@ html.no-touchevents .meta-item:hover .z-icon-comment {
     color: #fff!important;
     /*text-shadow: 0 1px 0 #fff;*/
     background: #25bb9b;
-/*    background: -webkit-linear-gradient(top,#25bb9b,#00B091);
-    background: linear-gradient(to bottom,#25bb9b,#00B091);*/
+/*    background: -webkit-linear-gradient(top,#25bb9b,#752979);
+    background: linear-gradient(to bottom,#25bb9b,#752979);*/
     /*border: 1px solid #bbb;*/
     box-shadow: 0 1px 0 #fff inset,0 1px 0 rgba(0,0,0,.1)
 }
 .zg-btn-white:hover {
-    background: #00B091;
+    background: #752979;
 }
 .zg-btn-white:active {
     background: #ddd;
@@ -4037,7 +4044,6 @@ html.touchevents .x-m,html.touchevents .x-e {
 
 .zu-main-feed-con {
     position: relative;
-    border-top: 1px solid #ccc
 }
 
 .zm-item-container {
@@ -4287,7 +4293,7 @@ html.no-touchevents .zm-item-vote-info a:hover {
 }
 
 .zm-item-answer-author-info .author-link {
-    font-weight: 700
+
 }
 
 .zm-item-answer-author-info .cancel-anon {
@@ -9688,10 +9694,10 @@ a>.invisible {
     z-index: 20;
     width: 100%;
     height: 45px;
-    background: #3d444c;
+    background: #512056;
     /*background: -webkit-linear-gradient(top,#086ed5,#055db5);
     background: linear-gradient(to bottom,#086ed5,#055db5);
-    border-bottom: 1px solid #044e97;
+    border-bottom: 1px solid #155faa;
     box-shadow: 0 1px 2px rgba(0,0,0,.25),inset 0 1px 0 rgba(255,255,255,.15)*/
 }
 
@@ -9718,7 +9724,7 @@ a>.invisible {
     float: left;
     width: 61px;
     height: 100%;
-    background-image: url(../images/res/nk.png);
+    background-image: url();
     background-repeat: no-repeat;
     background-position: center;
     text-indent: -9999px;
@@ -9766,10 +9772,10 @@ a>.invisible {
     right: 0;
     width: 40px;
     height: 100%;
-    background: #00BC9B;
-    background: -webkit-linear-gradient(top,#00BC9B,#00BC9B);
-    background: linear-gradient(to bottom,#00BC9B,#00BC9B);
-    border: 1px solid #3d444c;
+    background: #885c9a;
+    background: -webkit-linear-gradient(top,#885c9a,#885c9a);
+    background: linear-gradient(to bottom,#885c9a,#885c9a);
+    border: 1px solid #512056;
     border-top-right-radius: 4px;
     border-bottom-right-radius: 4px;
     box-shadow: 0 1px 2px rgba(0,0,0,.05),inset 0 1px 1px rgba(255,255,255,.15);
@@ -9829,9 +9835,9 @@ a>.invisible {
     height: 32px;
     line-height: 30px;
     margin-top: 7px;
-    border: 1px solid #00B091;
+    border: 1px solid #752979;
     border-radius: 4px;
-    background: #00BC9B;
+    background: #885c9a;
     /*background: -webkit-linear-gradient(top,#0e7bef,#0d73da);
     background: linear-gradient(to bottom,#0e7bef,#0d73da);*/
     box-shadow: 0 1px 2px rgba(0,0,0,.05),inset 0 1px 1px rgba(255,255,255,.15);
@@ -9846,7 +9852,7 @@ a>.invisible {
 }
 
 .zu-top-add-question:active {
-    background: #00BC9B;
+    background: #885c9a;
     /*background: -webkit-gradient(linear,left top,left bottom,from(#0e7ceb),to(#0c6fd3));
     background: -moz-linear-gradient(top,#0e7ceb,#0c6fd3);*/
     border: 1px solid #0659ac;

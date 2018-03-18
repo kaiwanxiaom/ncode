@@ -2386,7 +2386,7 @@ html.modal-open.no-flexbox .modal-wrapper .mutiview-dialog {
 }
 
 .sign-flow .sign-button {
-    background: #00BC9B;
+    background: #885c9a;
     box-shadow: none;
     border: 0;
     border-radius: 3px;
@@ -2395,7 +2395,7 @@ html.modal-open.no-flexbox .modal-wrapper .mutiview-dialog {
 }
 
 .sign-flow .sign-button:focus,html.no-touchevents .sign-flow .sign-button:hover {
-    background: #00B091
+    background: #752979
 }
 
 .sign-flow label.error {
