@@ -36,6 +36,10 @@ public class QuestionService {
         return questionDAO.addQuestion(question);
     }
 
+    public  List<Question> getLastestQuestionsByTag(int userId, int offset, int limit, String tag) {
+        return questionDAO.selectLatestQuestionsByTag(userId, offset, limit , tag);
+    }
+
     public List<Question> getLastestQuestions(int userId, int offset, int limit) {
         return questionDAO.selectLatestQuestions(userId, offset, limit);
     }

@@ -9,6 +9,7 @@ public class Question {
     private int userId;
     private Date createdDate;
     private int commentCount;
+    private String tag;
 
     public int getId() {
         return id;
@@ -56,5 +57,13 @@ public class Question {
 
     public void setCommentCount(int commentCount) {
         this.commentCount = commentCount;
+    }
+
+    public String getTag() {
+        return tag;
+    }
+
+    public void setTag(String tag) {
+        this.tag = tag;
     }
 }

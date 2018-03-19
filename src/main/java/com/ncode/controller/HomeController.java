@@ -52,7 +52,7 @@ public class HomeController {
         vo.set("commentCount", commentService.getCommentCountByUserId(userId));
         vo.set("followed", followService.isFollowed(EntityType.ENTITY_USER, userId, hostHolder.getUser().getId()));
         model.addAttribute("profileUser", vo);
-        model.addAttribute("vos", getViewQuestions(userId, 0, 10));
+        model.addAttribute("vos", getViewQuestions(userId, 0, 10, null));
 
         String key = JedisUtil.getTimeline(userId);
         List<String> feedIds = jedisAdapter.lrange(key, 0, 5);
@@ -64,14 +64,33 @@ public class HomeController {
         return "profile";
     }
 
-    @RequestMapping(value = {"/", "index"}, method = {RequestMethod.GET, RequestMethod.POST})
-    public String home(Model model, @RequestParam(value = "page", defaultValue = "0") int page) {
-        model.addAttribute("vos", getViewQuestions(0, 10*page, 10));
+    @RequestMapping(value = {"/game"}, method = {RequestMethod.GET, RequestMethod.POST})
+    public String gam(Model model, @RequestParam(value = "page", defaultValue = "0") int page) {
+        model.addAttribute("vos", getViewQuestions(0, 10*page, 10, "游戏"));
+        model.addAttribute("title", "游戏交流");
         return "index";
     }
 
-    private List<ViewObject> getViewQuestions(int userId, int offset, int limit) {
-        List<Question> questions = questionService.getLastestQuestions(userId, offset, limit);
+    @RequestMapping(value = {"/tech"}, method = {RequestMethod.GET, RequestMethod.POST})
+    public String tech(Model model, @RequestParam(value = "page", defaultValue = "0") int page) {
+        model.addAttribute("vos", getViewQuestions(0, 10*page, 10, "技术"));
+        model.addAttribute("title", "技术问答");
+        return "index";
+    }
+
+    @RequestMapping(value = {"/", "index"}, method = {RequestMethod.GET, RequestMethod.POST})
+    public String home(Model model, @RequestParam(value = "page", defaultValue = "0") int page) {
+        model.addAttribute("vos", getViewQuestions(0, 10*page, 10, null));
+        model.addAttribute("title", "首页广场");
+        return "index";
+    }
+
+    private List<ViewObject> getViewQuestions(int userId, int offset, int limit, String tag) {
+        List<Question> questions;
+        if(tag == null)
+            questions = questionService.getLastestQuestions(userId, offset, limit);
+        else
+            questions = questionService.getLastestQuestionsByTag(userId, offset, limit, tag);
         List<ViewObject> vos = new ArrayList<>();
         for (Question question : questions) {
             ViewObject vo = new ViewObject();

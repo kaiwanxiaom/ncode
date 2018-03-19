@@ -4,7 +4,7 @@
 
 <mapper namespace="com.ncode.dao.QuestionDAO">
     <sql id="table">question</sql>
-    <sql id="selectFields">id, title, content,comment_count,created_date,user_id</sql>
+    <sql id="selectFields">id, title, content,comment_count,created_date,user_id, tag</sql>
     <select id="selectLatestQuestions" resultType="com.ncode.model.Question">
         SELECT
         <include refid="selectFields"/>
@@ -13,6 +13,20 @@
         <if test="userId != 0">
             WHERE user_id = #{userId}
         </if>
+        ORDER BY id DESC
+        LIMIT #{offset},#{limit}
+    </select>
+
+    <select id="selectLatestQuestionsByTag" resultType="com.ncode.model.Question">
+        SELECT
+        <include refid="selectFields"/>
+        FROM
+        <include refid="table"/>
+        WHERE tag = #{tag}
+        <if test="userId != 0">
+            AND user_id = #{userId}
+        </if>
+
         ORDER BY id DESC
         LIMIT #{offset},#{limit}
     </select>
