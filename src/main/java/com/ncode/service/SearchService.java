@@ -15,7 +15,7 @@ import java.util.Map;
 
 @Service
 public class SearchService {
-    private static final String SOLR_URL = "http://localhost:8983/solr/discuss";
+    private static final String SOLR_URL = "http://121.43.106.119:8983/solr/discuss";
     private static final String QUESTION_TITLE_FIELD = "question_title";
     private static final String QUESTION_CONTENT_FIELD = "question_content";
     private HttpSolrClient client = new HttpSolrClient.Builder(SOLR_URL).build();
