@@ -26,7 +26,6 @@ public class SearchController {
     @Autowired
     QuestionService questionService;
 
-
     @Autowired
     SearchService searchService;
 
@@ -38,11 +37,11 @@ public class SearchController {
 
     @RequestMapping(value = {"/search"}, method = RequestMethod.GET)
     public String search(Model model, @RequestParam("q") String keyword,
-                         @RequestParam(value = "offset", defaultValue = "0") int offset,
+                         @RequestParam(value = "page", defaultValue = "0") int offset,
                          @RequestParam(value = "count", defaultValue = "10") int count) {
         try {
-            List<Question> questionList = searchService.searchQuestion(keyword, offset, count,
-                    "<em>", "</em>");
+            List<Question> questionList = searchService.searchQuestion(keyword, offset*10, count,
+                    "<span style=\"color:red\">", "</span>");
             List<ViewObject> vos = new ArrayList<>();
             for (Question question : questionList) {
                 Question q = questionService.getQuestionById(question.getId());
